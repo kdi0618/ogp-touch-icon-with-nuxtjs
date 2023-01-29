@@ -1,4 +1,4 @@
-const baseUrl = ``
+const baseUrl = `https://d2hnktvr5mkq6d.cloudfront.net/`
 const ogpImg = `ogp.png`
 const ogpImgSrc = `${baseUrl}${ogpImg}`
 
@@ -6,11 +6,14 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  ssr: false,
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'test-ogp-with-nuxt',
     htmlAttrs: {
       lang: 'en',
+      prefix: 'og: http://ogp.me/ns#',
     },
     meta: [
       { charset: 'utf-8' },

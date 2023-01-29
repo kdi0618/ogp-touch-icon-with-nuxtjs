@@ -1,3 +1,7 @@
+const baseUrl = ``
+const ogpImg = `ogp.png`
+const ogpImgSrc = `${baseUrl}${ogpImg}`
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -11,10 +15,27 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: 'テスト-kode' },
       { name: 'format-detection', content: 'telephone=no' },
+      { hid: 'og:url', property: 'og:url', content: baseUrl },
+      { hid: 'og:image', property: 'og:image', content: ogpImgSrc },
+      { hid: 'og:image', property: 'og:image', content: ogpImgSrc },
+      {
+        hid: 'og:image:secure_url',
+        property: 'og:image:secure_url',
+        content: ogpImgSrc,
+      },
+      {
+        hid: 'twitter:card',
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      { hid: 'twitter:image', name: 'twitter:image', content: ogpImgSrc },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

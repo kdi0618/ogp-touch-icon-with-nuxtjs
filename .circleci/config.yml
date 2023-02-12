@@ -20,13 +20,37 @@ jobs:
           paths:
             - ~/.npm
 
-      - run:
-          name: Run linter
-          command: npm run lint
+      - run: # Install the AWS CLI if it is not already included in the docker image
+          name: Install awscli
+          command: |
+            sudo apt update
+            sudo apt install python3-pip
+            sudo pip3 install awscli
+
+      - run: # Deploy to S3 using the sync command
+          name: Deploy to S3
+          command: |
+            export NODE_OPTIONS=--openssl-legacy-provider && npm run generate
+            aws s3 sync ./dist s3://$AWS_BUCKET_NAME --delete
+
+      - run: # Clears the CloudFront cache so new requests will receive the latest version of the app
+          name: Invalidate CloudFront distribution
+          command: |
+            aws cloudfront create-invalidation \
+              --distribution-id $AWS_DIST_ID \
+              --path "/*"
 
 workflows:
   version: 2
-  ci:
+  ci-for-develop:
+    jobs:
+      - ci:
+          context: test-glu-preview
+          filters:
+            branches:
+              only:
+                - develop
+  ci-for-production:
     jobs:
       - ci:
           filters:

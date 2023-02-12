@@ -42,7 +42,15 @@ jobs:
 
 workflows:
   version: 2
-  ci:
+  ci-for-develop:
+    jobs:
+      - ci:
+          context: test-glu-preview
+          filters:
+            branches:
+              only:
+                - develop
+  ci-for-production:
     jobs:
       - ci:
           filters:
@@ -50,9 +58,3 @@ workflows:
               only:
                 - main
                 - master
-      - ci:
-          context: preview_deployment
-          filters:
-            branches:
-              only:
-                - develop
